@@ -1,0 +1,53 @@
+.jumbotron{
+	text-align: center;
+
+	padding-top: 0 !important;
+	background-color: #111 !important;
+	color: #ffffff;
+	padding-bottom: 0 !important;
+	}
+.collapse a{
+	margin-bottom: 2px;
+}
+.nav-link:hover{
+	border-bottom: #ffffff 2px solid;
+	margin-bottom: 0 !important;
+}
+.navbar-nav{
+	float: right;
+	padding-right: 7px;
+}
+
+#sidenav {
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    padding-right: 35px;
+   
+}
+
+#sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+#sidenav a:hover {
+    color: #f1f1f1;
+    text-align: center;
+
+}
+
+img{
+	margin-top: 30px;
+}
+#maincol{
+	 margin-bottom: 0;
+	 padding: 40px;
+	 background-color: #3b465e;
+}

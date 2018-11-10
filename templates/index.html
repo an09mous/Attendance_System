@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Attendance System</title>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="{{url_for('static',filename='javascript.js')}}"></script>
+
+	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<!--Jumbotron-->
+	<div class="jumbotron">
+    {% if alert %}
+      <div class="alert alert-danger" role="alert" id="show">{{alert}}</div>
+    {% endif %}
+			<img src="{{url_for('static',filename='BDCoE_Logo.png')}}" width="400" height="auto">
+ 		<h1 class="display-4">LAB ATTENDANCE</h1>
+ 		<p class="lead">Welcome to Big Data Center of Excellence Lab Attendance System</p>
+  		<hr class="my-4">
+  		<p>The system uses face recognition and location data to verify the user and also provide various statistical data for Admin</p>
+  		<div class="container">
+  			<div class="row">
+  				<div class="col-md-6">
+  					<a href="#" type="button" class="btn btn-light btn-lg btn-block" onclick="div_show()">Admin</a>
+  				</div>
+  				<div class="col-md-6">
+  					<a href="#" type="button" class="btn btn-light btn-lg btn-block" onclick="div_show()">User</a>
+  				</div>
+  			</div>
+  		</div>
+  	</div>
+  		<!--Jumbotron-->
+      <br><br>
+      <!--Popup Form-->
+      <div  id="abc">
+        <div id="Popup">
+          <div class="row">
+            <div class="col-md-6 offset-md-3" id="xyz">
+              <form id="form" action="/login" method="post">
+                <div class="form-group">
+                  <img id="close" src="{{url_for('static',filename='close.png')}}" onclick ="div_hide()">
+                  <label>User Name</label>
+                  <input type="text" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter User Name" name="username">
+                  <small id="emailHelp" class="form-text text-muted">We'll never share your username with anyone else.</small>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+                <button id="login" type="submit" class="btn btn-primary" onclick="check_empty()">Login</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Popup Form-->
+
+  		<!--Footer-->
+  		<footer class="main-footer">
+  			<div class="container">
+  				<p>BDCOE &copy; 2018</p>
+  				<a href="https://www.facebook.com/bigdatacoe" class="fa fa-facebook" style="margin-right: 10px; margin-bottom: 30px; font-size: 36px"></a>
+				<a href="#" class="fa fa-twitter" style="margin-bottom: 30px; font-size: 36px"></a>
+  			</div>
+  		</footer>
+  		<!--Footer-->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>

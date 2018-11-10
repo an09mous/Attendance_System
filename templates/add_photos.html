@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>demo</title>
+		<script type="text/javascript" src="{{url_for('static',filename='tracking-min.js')}}"></script>
+		<script type="text/javascript" src="{{url_for('static',filename='face-min.js')}}"></script>
+		<script
+		  src="https://code.jquery.com/jquery-3.3.1.js"
+		  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		  crossorigin="anonymous"></script>
+		   <style>
+			  video, canvas {
+			    position: absolute;
+			    width: 100%
+			    height: auto;
+			  }
+			</style>
+	</head>
+	<body>
+		<video id="video" width="720" height="480" preload autoplay loop muted></video>
+          <canvas id="canvas" width="720" height="480"></canvas>
+          <canvas id="display" width="720" height="480"></canvas>
+          <script type="text/javascript">
+          	 window.onload = function() {
+		      var video = document.getElementById('video');
+		      var canvas = document.getElementById('canvas');
+		      var context = canvas.getContext('2d');
+
+		      var display=document.getElementById('display');
+		      var ctx=display.getContext('2d');
+		      var count=0;
+
+		      var tracker = new tracking.ObjectTracker('face');
+		      tracker.setInitialScale(4);
+		      tracker.setStepSize(2);
+		      tracker.setEdgesDensity(0.1);
+
+		      tracking.track('#video', tracker, { camera: true });
+
+		      tracker.on('track', function(event) {
+		        context.clearRect(0, 0, canvas.width, canvas.height);
+
+		        event.data.forEach(function(rect) {
+		          context.strokeStyle = '#a64ceb';
+		        context.strokeRect(rect.x, rect.y, rect.width, rect.height);
+		          context.font = '11px Helvetica';
+		          context.fillStyle = "#fff";
+		          context.fillText('x: ' + rect.x + 'px', rect.x + rect.width, rect.y);
+		          context.fillText('y: ' + rect.y + 'px', rect.x + rect.width, rect.y);
+
+		          if(count<100){
+		            window.setTimeout(function(){
+		              ctx.drawImage(video,0,0,720,480);
+		              var dataURL=display.toDataURL();
+		              var user='{{add_user|safe}}'
+		              //Sending file to server
+		              $.ajax({
+		                 type: "POST",
+		                 url: "/add_user",
+		                 data: {
+		                 	username: user,
+		                   imgBase64: dataURL
+		                 }
+		             })
+		            },1000);
+		          count+=1;
+		          }
+		        });
+		      });
+		    };
+          </script>
+	</body>
+</html>

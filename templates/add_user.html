@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="col-md-9" id="maincol">
+	<h1>Add User</h1>
+	<div id="msg" class="alert"></div>
+	<form style="background-color: white; width: 100%; margin: 20px; padding: 10px; border-radius: 15px;" action="/add_user" method="post" id="regform">
+		<div class="form-group">
+			<label>Student NO.</label>
+			<input type="number" class="form-control" name="student_no" placeholder="Student No." id="student_no">
+		</div>
+		<div class="form-group">
+			<label>Username</label>
+			<input type="text" class="form-control" name="username" placeholder="Username" id="username">
+		</div>
+		<div class="form-group">
+			<label>Name</label>
+			<input type="text" class="form-control" name="name" placeholder="Name" id="name">
+		</div>
+		<div class="form-group">
+			<label>Branch</label>
+			<input type="text" class="form-control" name="branch" placeholder="Branch" id="branch">
+		</div>
+		<div class="form-group">
+			<label>Year</label>
+			<input type="number" class="form-control" name="year" placeholder="Year" id="year">
+		</div>
+		<div class="form-group">
+			<label>Password</label>
+			<input type="Password" class="form-control" name="password" placeholder="Password" id="password">
+		</div>
+		<div class="form-group">
+			<label>Confirm Password</label>
+			<input type="Password" class="form-control" name="confirm_password" placeholder="Confirm Password" id="password2">
+		</div>
+		<button type="submit" class="btn btn-primary">Submit</button>
+	</form>
+	
+</div>
+
+
+
+{% endblock content %}
+
+{% block script %}
+document.getElementById('nav-user').className='nav-item active';
+document.getElementById('nav-home').className='nav-item';
+document.getElementById('nav-details').className='nav-item';
+
+
+{% endblock script %}

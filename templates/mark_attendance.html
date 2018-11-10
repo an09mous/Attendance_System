@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mark Attendance</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script
+		  src="https://code.jquery.com/jquery-3.3.1.js"
+		  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		  crossorigin="anonymous"></script>
+		<style type="text/css">
+			footer{
+				margin-top: 10px;
+				margin-bottom: 0;
+				background-color: #f5f5f5;
+				text-align: center;
+				padding: 30px 30px 10px 30px;
+				position: absolute;
+				bottom: 0;
+				width: 100%;
+			}
+		</style>
+		<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	</head>
+	<body style="min-height: 90vh; position: relative; margin-bottom: 10px;">
+		<div class="container">
+			<div role="alert" id="alert" style="margin: 50px;"></div>
+			<div align="center">
+				<div class="card" style="width: 20rem;">
+					  <div class="card-body">
+					    <h5 class="card-title">Welcome {{user}}</h5>
+					    <h6 class="card-subtitle mb-2 text-muted">Mark Attendance</h6>
+					    <p class="card-text">Your face has been recognized. Mark your entry just by Pressing the blue button below.</p>
+					    <button type="button" class="btn btn-primary" onclick="mark()" id="button" disabled></button>
+					    <a class="btn btn-secondary" href="/logout" role="button">Log Out</a>
+					  </div>
+					  
+				</div>
+			</div>
+  	</div>
+  	<footer class="main-footer">
+  				<p>BDCOE &copy; 2018</p>
+  				<a href="https://www.facebook.com/bigdatacoe" class="fa fa-facebook" style="margin-right: 10px; margin-bottom: 30px; font-size: 36px"></a>
+				<a href="#" class="fa fa-twitter" style="margin-bottom: 30px; font-size: 36px"></a>
+  	</footer>
+			
+
+		<script type="text/javascript">
+			var b=document.getElementById('button');
+			var show = document.getElementById("alert");
+			var latitude=28.6786149;
+			var longitude=77.4990433;
+			var radius=0.00004;
+			//Checking user location
+			function getLocation() {
+			    if (navigator.geolocation) {
+			        navigator.geolocation.getCurrentPosition(checkLoc,function error(msg){alert('Error in getting Location');},{maximumAge:600000, timeout:5000, enableHighAccuracy: true});
+			    } else {
+			        show.innerHTML = "Geolocation is not supported by this browser.";
+			    }
+			}
+			function checkLoc(position) {
+				var r=Math.pow(latitude-position.coords.latitude,2)+Math.pow(longitude-position.coords.longitude,2);
+				if(r<=radius){
+					b.disabled=false;
+				}
+				if(b.innerHTML=="Check Out")
+					b.disabled=false;
+				show.innerHTML = "Latitude: " + position.coords.latitude + 
+			    "<br>Longitude: " + position.coords.longitude+"<br>Radius "+r;
+			}
+			if ({{status}}==1)
+				b.innerHTML="Check Out";
+			else
+				b.innerHTML="Check In";
+
+			//Function to mark attendance
+			function mark() {
+				var d=new Date();
+				$.post('/status',{
+					date: d.getDate()+'-'+(d.getMonth()+1)+'-'+d.getFullYear(),
+					time: d.getHours()+':'+d.getMinutes()+':'+d.getSeconds()
+				},function(status, current){
+					if (status=='1'){
+						show.className='alert alert-success';
+						show.innerHTML='You have Checked In successfully'
+						b.innerHTML="Check Out";
+					}
+					else{
+						show.className='alert alert-danger';
+						show.innerHTML='You have Checked Out successfully'
+						b.innerHTML="Check In"
+					}
+				})
+			}
+			setTimeout(getLocation,500)
+		</script>
+			
+
+	</body>
+</html>
